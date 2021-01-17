@@ -1,3 +1,20 @@
+enum myTest {
+    friend = 'http://example.org/friend'
+}
+
+interface MyInterface {
+    'http://example.org/friend': true
+};
+
+type OverrideKeys<T extends Record<string, string>, K extends {}> = {
+    [key in keyof K]: true
+}
+
+
+
+
+
+
 // This is how '+' is implemented
 interface CPlus<T> {
     friend: {
