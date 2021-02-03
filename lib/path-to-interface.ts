@@ -3,12 +3,13 @@ import {
   ts,
   printNode,
   SyntaxKind,
-  TrueLiteral
+  TrueLiteral,
+  // NamedNode
 } from 'ts-morph';
 import { ProxiedResource, RdfObjectProxy } from 'rdf-object-proxy';
 import { namedNode } from '@rdfjs/data-model'
 import { SignatureKind } from 'typescript';
-import { Term, Quad_Subject, Quad_Object } from 'rdf-js';
+import { Term, Quad_Subject, Quad_Object, NamedNode, Literal } from 'rdf-js';
 
 
 // ts.TypeParam
@@ -96,6 +97,64 @@ function shaclToInterface(shacl: ProxiedResource<string>) {
 
   // }
 }
+
+interface SHACLInterface {
+  term: NamedNode;
+  properties: {
+    name: SHACLInterface2
+  }
+}
+
+interface SHACLInterface2 extends BaseInterface {
+  term: NamedNode;
+  properties: {
+    name?: SHACLInterface
+  }
+}
+
+const xl: SHACLInterface;
+
+interface BaseInterface {
+  term: Term;
+  properties: Record<string, BaseInterface | undefined>;
+}
+
+/**
+ * Converts interface to a path for libraries like LDflex and
+ * rdf-object-shacl
+ */
+type ToPath<T extends BaseInterface> = {
+  [K in keyof T['properties']]: T['properties'][K] extends BaseInterface ? ToPath<T['properties'][K]> : undefined;
+};
+
+interface DatatypeMapping {
+  integer: number;
+  float: number;
+  double: number;
+  dateTime: Date;
+  // [key: string]: string
+};
+
+type ToLDFlex<T extends BaseInterface> = {
+  [K in keyof T['properties']]: T['properties'][K] extends BaseInterface ? ToLDFlex<T['properties'][K]> : undefined;
+  a: string;
+  // valueOf: T['term'] extends Literal ? DatatypeMapping[T['term']['datatype']['value']] : string;
+};
+
+// ToPath<T> & {
+//   valueOf(): T['term'] extends Literal ? DatatypeMapping[T['term']['datatype']['value']] : string
+// }
+
+// type LDFLEXSHACL = ToLDFlex<SHACLInterface>
+
+// const f: LDFLEXSHACL;
+
+// f.name.val
+
+// if (xl.)
+
+// xl.properties.name.properties.name?.properties.
+
 
 
 function pathToInterface(path: ProxiedResource<string>, mapping: Record<string, string>): any {

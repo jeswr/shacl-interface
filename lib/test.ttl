@@ -1,0 +1,3 @@
+@prefix : <http://ex> .
+
+:Jesse :age INF .
