@@ -7,7 +7,8 @@ import {
   // NamedNode
 } from 'ts-morph';
 import { ProxiedResource, RdfObjectProxy } from 'rdf-object-proxy';
-import { namedNode } from '@rdfjs/data-model'
+import { Resource } from 'rdf-object'
+import { namedNode, literal } from '@rdfjs/data-model'
 import { SignatureKind } from 'typescript';
 import { Term, Quad_Subject, Quad_Object, NamedNode, Literal } from 'rdf-js';
 
@@ -88,14 +89,15 @@ if (tm.termType === 'NamedNode') {
   tm
 }
 
-
-function shaclToInterface(shacl: ProxiedResource<string>) {
-  if (shacl.closed == true) {
+// TODO: Replace all instances of any
+// with the generated ts files
+function shaclToInterface(shacl: any) {
+  if ((await shacl.closed) == true) {
 
   }
-  // if (shacl.nodeKind) {
+  for await (const property of shacl.property) {
 
-  // }
+  }
 }
 
 interface SHACLInterface {

@@ -1,0 +1,10 @@
+@prefix ex: <http://example.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:testShape1 a sh:NodeShape ;
+  sh:closed true ;
+  sh:property [
+    sh:minCount 1 ;
+    sh:path ex:path1 ;
+
+  ] .
