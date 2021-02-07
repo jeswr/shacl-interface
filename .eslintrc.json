@@ -24,6 +24,6 @@
       "no-unused-vars": "off",
       "no-shadow": "off",
       "camelcase": "off",
-      "no-underscore-dangle"
+      "no-underscore-dangle": "off"
   }
 }

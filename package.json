@@ -14,8 +14,8 @@
     "test:coverage": "npm test -- --coverage",
     "test:badges": "npm run test:coverage  && jest-coverage-badges",
     "test": "jest",
-    "lint": "eslint lib/* __tests__/* --ext .ts",
-    "lint:fix": "eslint lib/* __tests__/* --ext .ts --fix",
+    "lint": "eslint lib/* __tests__/*.ts --ext .ts",
+    "lint:fix": "eslint lib/* __tests__/*.ts --ext .ts --fix",
     "build": "tsc",
     "prepare": "tsc",
     "semantic-release": "semantic-release"

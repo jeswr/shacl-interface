@@ -1,4 +1,6 @@
-import { Term, Literal, NamedNode, BlankNode } from 'rdf-js';
+import {
+  Term, Literal, NamedNode, BlankNode,
+} from 'rdf-js';
 import { BaseInterface } from './base-interface';
 import { ns as xsd } from './xsd';
 
@@ -12,18 +14,17 @@ interface DatatypeMapping {
 }
 
 /**
- * Mapes a datatype to its primitive value
+ * Maps a datatype to its primitive value
  */
 type DatatypeMapper<T extends NamedNode> = T['value'] extends keyof DatatypeMapping ? DatatypeMapping[T['value']] : string
 
 /**
- * 
+ *
  */
 type LiteralValue<T extends Term> = T extends Literal ? DatatypeMapper<T['datatype']> : string;
 
-
 interface LDFlexTermProperties<T extends Term> {
-  
+
   // RDFJS
   valueOf(): LiteralValue<T>;
   toPrimitive(): LiteralValue<T>;
@@ -44,8 +45,7 @@ interface LDFlexTermProperties<T extends Term> {
 
 // type termString = string
 
-// type 
-
+// type
 
 // type Path = termString | `(${Path})`;
 
