@@ -20,6 +20,9 @@ type Mapping = Record<string, string>
 // Thought - use generic to pass down class/datatype restrictions
 
 
+
+
+
 // ts.factory.
 
 

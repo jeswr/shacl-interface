@@ -1,20 +1,3 @@
-enum myTest {
-    friend = 'http://example.org/friend'
-}
-
-interface MyInterface {
-    'http://example.org/friend': true
-};
-
-type OverrideKeys<T extends Record<string, string>, K extends {}> = {
-    [key in keyof K]: true
-}
-
-
-
-
-
-
 // This is how '+' is implemented
 interface CPlus<T> {
     friend: {
@@ -136,16 +119,8 @@ const f = xy.slice(0, 1)
 
 type Path = ['friend', 'altA' | 'altB' | ['c' | 'd'], 'employer']
 
-type M<T extends any[]> = T extends [] ? true : 
 
 
-type G<T> = Record<'hello', T> & Record<'goodbye', T>
-
-let i: G<boolean>;
-
-if ('hello' in x) {
-    x.
-}
 
 type TypeArray = [1, TypeArray];
 
