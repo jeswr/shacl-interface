@@ -17,9 +17,9 @@ function sequenceReduction(
  * Converts a path segment to a generic interface
  */
 export async function pathSegmentToInterface(path: any): Promise<PropertyResult> {
-  const name = ts.factory.createUniqueName('');
   switch (`${await path.termType}`) {
     case 'NamedNode': {
+      const name = ts.factory.createUniqueName('Path');
       return {
         // TODO: better naming scheme
         name,
@@ -45,6 +45,8 @@ export async function pathSegmentToInterface(path: any): Promise<PropertyResult>
       // TODO: Add type once we generate shacl constraints
       const alt: any[] = await path.alternativePath.toArray();
       if (alt.length > 0) {
+        const name = ts.factory.createUniqueName('AlternativePath');
+        console.log('inside alternative path case');
         const alternatives = await Promise.all(alt.map((p) => pathSegmentToInterface(p)));
         const unionNode = ts.factory.createUnionTypeNode(
           alternatives.map(({ name }) => ts.factory.createTypeReferenceNode(name, REFERENCE)),
@@ -66,6 +68,7 @@ export async function pathSegmentToInterface(path: any): Promise<PropertyResult>
       }
       const zeroOrMore = await path.alternativePath;
       if (`${zeroOrMore}` !== 'undefined') {
+        const name = ts.factory.createUniqueName('ZeroOrMorePath');
         const { name: prevName, interfaces, imports } = await pathSegmentToInterface(zeroOrMore);
         const addition = ts.factory.createTypeAliasDeclaration(
           [],
@@ -84,6 +87,7 @@ export async function pathSegmentToInterface(path: any): Promise<PropertyResult>
       }
       const oneOrMore = await path.oneOrMorePath;
       if (`${oneOrMore}` !== 'undefined') {
+        const name = ts.factory.createUniqueName('OneOrMorePath');
         const { name: prevName, interfaces, imports } = await pathSegmentToInterface(oneOrMore);
         const addition = ts.factory.createTypeAliasDeclaration(
           [],
@@ -102,6 +106,7 @@ export async function pathSegmentToInterface(path: any): Promise<PropertyResult>
       }
       const zeroOrOne = await path.zeroOrOne;
       if (`${zeroOrOne}` !== 'undefined') {
+        const name = ts.factory.createUniqueName('ZeroOrOnePath');
         const { name: prevName, interfaces, imports } = await pathSegmentToInterface(zeroOrOne);
         const addition = ts.factory.createTypeAliasDeclaration(
           [],
@@ -120,6 +125,7 @@ export async function pathSegmentToInterface(path: any): Promise<PropertyResult>
       }
       const inversePath = await path.inversePath;
       if (`${inversePath}` !== 'undefined') {
+        const name = ts.factory.createUniqueName('InversePath');
         const { name: prevName, interfaces, imports } = await pathSegmentToInterface(inversePath);
         const addition = ts.factory.createTypeAliasDeclaration(
           [],
@@ -138,6 +144,7 @@ export async function pathSegmentToInterface(path: any): Promise<PropertyResult>
       }
       const sequence: any[] = await path.list;
       if (sequence.length > 0) {
+        const name = ts.factory.createUniqueName('SequencePath');
         const sequenceElems = (await Promise.all(sequence.map((p) => pathSegmentToInterface(p))));
         const addition = ts.factory.createTypeAliasDeclaration(
           [],

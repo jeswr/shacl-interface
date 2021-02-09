@@ -1,0 +1,8 @@
+@prefix ex: <http://example.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+
+ex:testShape1 a sh:NodeShape ;
+  sh:closed true ;
+  sh:property [
+    sh:path [ sh:alternativePath (( ex:path1 ex:path2 ) ex:path4 ex:path5) ] ;
+  ] .
